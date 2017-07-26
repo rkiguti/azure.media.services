@@ -26,12 +26,16 @@ namespace AzureMediaServices.App
 
 		#region Construtores
 
-		public AzureMediaServices(string mediaServicesAccountName, string mediaServicesAccountKey)
+		public AzureMediaServices(string aadTenantDomain, string restApiUrl, string clientId, string clientSecret)
 		{
 			_cloudMediaContextLazy = new Lazy<CloudMediaContext>(() =>
 			{
-				var cachedCredentials = new MediaServicesCredentials(mediaServicesAccountName, mediaServicesAccountKey);
-				return new CloudMediaContext(cachedCredentials);
+				var tokenCredentials = new AzureAdTokenCredentials(aadTenantDomain, new AzureAdClientSymmetricKey(clientId, clientSecret),
+					AzureEnvironments.AzureCloudEnvironment);
+
+				var tokenProvider = new AzureAdTokenProvider(tokenCredentials);
+
+				return new CloudMediaContext(new Uri(restApiUrl), tokenProvider);
 			});
 		}
 

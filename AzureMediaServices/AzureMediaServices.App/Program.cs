@@ -6,11 +6,10 @@ namespace AzureMediaServices.App
 {
 	class Program
 	{
-		// Read values from the App.config file.
-		private static readonly string _mediaServicesAccountName =
-			ConfigurationManager.AppSettings["MediaServicesAccountName"];
-		private static readonly string _mediaServicesAccountKey =
-			ConfigurationManager.AppSettings["MediaServicesAccountKey"];
+		private static readonly string _aadTenantDomain = ConfigurationManager.AppSettings["AADTenantDomain"];
+		private static readonly string _restApiUrl = ConfigurationManager.AppSettings["RESTApiUrl"];
+		private static readonly string _clientId = ConfigurationManager.AppSettings["ClientId"];
+		private static readonly string _clientSecret = ConfigurationManager.AppSettings["ClientSecret"];
 
 		// Field for service context.
 		private static AzureMediaServices azureMediaServices = null;
@@ -22,7 +21,7 @@ namespace AzureMediaServices.App
 				Console.WriteLine($"Start: {DateTime.Now}");
 				Console.WriteLine();
 
-				azureMediaServices = new AzureMediaServices(_mediaServicesAccountName, _mediaServicesAccountKey);
+				azureMediaServices = new AzureMediaServices(_aadTenantDomain, _restApiUrl, _clientId, _clientSecret);
 
 				var videoAsset = UploadFile(@"D:\DRIVE_C\Downloads\06. Demo - Basics.mp4");
 				var audioAsset = UploadFile(@"D:\Guide 6 Understand.mp3");
