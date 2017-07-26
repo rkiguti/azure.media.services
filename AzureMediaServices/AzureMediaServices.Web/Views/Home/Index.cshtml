@@ -1,0 +1,34 @@
+﻿@{
+	ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+	<video id="azuremediaplayer" class="azuremediaplayer amp-default-skin amp-big-play-centered" tabindex="0"></video>	
+</div>
+
+@section styles
+{
+	<link href="http://amp.azure.net/libs/amp/2.1.2/skins/amp-default/azuremediaplayer.min.css" rel="stylesheet">
+}
+
+@section scripts
+{
+	<script src="//amp.azure.net/libs/amp/2.1.2/azuremediaplayer.min.js"></script>
+	<script>
+		var myOptions = {
+			"nativeControlsForTouch": false,
+			controls: true,
+			autoplay: true,
+			width: "640",
+			height: "400",
+		}
+		myPlayer = amp("azuremediaplayer", myOptions);
+		myPlayer.src([
+			{
+				"src":
+					"http://primarkiguti.streaming.mediaservices.windows.net/5ad2a46b-26cf-4d90-86f0-f885d846c522/06. Demo - Basics.ism/manifest",
+				"type": "application/vnd.ms-sstr+xml"
+			}
+		]);
+	</script>
+}
